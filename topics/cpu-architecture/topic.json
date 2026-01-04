@@ -1,0 +1,217 @@
+{
+  "id": "cpu-architecture",
+  "title": "CPU Architecture",
+  "description": "Von Neumann fetch-execute cycle visualization",
+  "slides": [
+    {
+      "id": "fetch-execute",
+      "title": "The Fetch-Execute Cycle",
+      "diagram": "diagram.svg",
+      "components": {
+        "val_pc": "0x1A",
+        "val_ir": "--",
+        "val_cu": "IDLE",
+        "val_alu": "WAIT",
+        "val_acc": "05",
+        "val_ram": "Addr 0x1A"
+      },
+      "steps": [
+        {
+          "id": "intro",
+          "ui": {
+            "phase": "SYSTEM READY",
+            "title": "Introduction",
+            "description": "Welcome. This simulation visualizes how a CPU processes instructions.<br><br>We will follow one single <strong>Clock Cycle</strong> step-by-step.<br><br>Press <strong>NEXT STEP</strong> to begin.",
+            "noteTitle": "Overview",
+            "note": "The components are separated into \"Storage\" (RAM) and \"Processing\" (CPU). The grey lines connecting them are the <strong>Bus</strong>."
+          },
+          "animations": []
+        },
+        {
+          "id": "fetch-address",
+          "ui": {
+            "phase": "PHASE 1: FETCH",
+            "title": "Address Request",
+            "description": "The <span class='hl'>PC (Program Counter)</span> sends the address <code>0x1A</code> to RAM.",
+            "noteTitle": "Analogy",
+            "note": "Think of the PC as your finger pointing to the current line in a book. It tells the system <em>where</em> to read next."
+          },
+          "initialState": {
+            "val_ram": "Addr 0x1A"
+          },
+          "finalState": {
+            "val_ram": "READING..."
+          },
+          "animations": [
+            { "type": "camera", "to": [150, 200, 800, 450] },
+            {
+              "type": "packet",
+              "text": "0x1A",
+              "from": [700, 300],
+              "paths": [
+                "#path_pc_out",
+                { "path": "#wire_bus_main", "start": 0.71, "end": 0.24, "duration": 2.0 },
+                "#path_ram_in"
+              ]
+            },
+            { "type": "pulse", "target": "#node_ram" },
+            { "type": "setValue", "target": "val_ram", "value": "READING..." },
+            { "type": "camera", "to": [0, 0, 1600, 900] }
+          ]
+        },
+        {
+          "id": "fetch-data",
+          "ui": {
+            "phase": "PHASE 1: FETCH",
+            "title": "Instruction Return",
+            "description": "RAM finds the data at 0x1A: <span class='hl'>INC ACC</span>. It sends it back to the <span class='hl'>IR</span>.",
+            "noteTitle": "Why It's Slow",
+            "note": "Fetching data from RAM takes much longer than processing it. Modern CPUs use 'Cache' to speed this up."
+          },
+          "initialState": {
+            "val_ram": "READING...",
+            "val_ir": "--"
+          },
+          "finalState": {
+            "val_ir": "INC ACC"
+          },
+          "animations": [
+            { "type": "camera", "to": [150, 200, 800, 450] },
+            {
+              "type": "packet",
+              "text": "INC",
+              "from": [300, 350],
+              "paths": [
+                "#path_ram_out",
+                { "path": "#wire_bus_main", "start": 0.24, "end": 0.88, "duration": 2.0 },
+                "#path_ir_in"
+              ]
+            },
+            { "type": "pulse", "target": "#node_ir" },
+            { "type": "setValue", "target": "val_ir", "value": "INC ACC" },
+            { "type": "camera", "to": [0, 0, 1600, 900] }
+          ]
+        },
+        {
+          "id": "decode",
+          "ui": {
+            "phase": "PHASE 2: DECODE",
+            "title": "Control Logic",
+            "description": "The <span class='hl'>Control Unit</span> reads 'INC ACC' and translates it into the electrical command: <b>ADD 1</b>.",
+            "noteTitle": "The Boss",
+            "note": "The Control Unit decides which parts of the CPU need to turn on. Here, it prepares the ALU."
+          },
+          "initialState": {
+            "val_cu": "IDLE"
+          },
+          "finalState": {
+            "val_cu": "ADD 1"
+          },
+          "animations": [
+            { "type": "camera", "to": [600, 300, 800, 450] },
+            {
+              "type": "packet",
+              "text": "OP",
+              "from": [850, 450],
+              "paths": [
+                { "path": "#path_ir_cu", "duration": 1.5, "ease": "power1.inOut" }
+              ]
+            },
+            { "type": "pulse", "target": "#node_cu" },
+            { "type": "setValue", "target": "val_cu", "value": "ADD 1" },
+            { "type": "camera", "to": [0, 0, 1600, 900] }
+          ]
+        },
+        {
+          "id": "execute",
+          "ui": {
+            "phase": "PHASE 3: EXECUTE",
+            "title": "ALU Calculation",
+            "description": "The <span class='hl'>ALU</span> receives 5 (from ACC) and +1 (from CU). It calculates the result: 6.",
+            "noteTitle": "How It Works",
+            "note": "The ALU (Arithmetic Logic Unit) is just a fancy calculator. It contains logic gates (AND, OR, XOR) to do math."
+          },
+          "initialState": {
+            "val_alu": "WAIT"
+          },
+          "finalState": {
+            "val_alu": "6"
+          },
+          "animations": [
+            { "type": "camera", "to": [700, 300, 800, 450] },
+            {
+              "type": "packet",
+              "text": "5",
+              "from": [1300, 550],
+              "paths": [
+                { "path": "#path_acc_alu", "duration": 1.5 }
+              ]
+            },
+            {
+              "type": "packet",
+              "text": "+1",
+              "from": [850, 650],
+              "paths": [
+                { "path": "#path_cu_alu", "duration": 2.0 }
+              ]
+            },
+            { "type": "pulse", "target": "#node_alu" },
+            { "type": "setValue", "target": "val_alu", "value": "6" },
+            { "type": "camera", "to": [0, 0, 1600, 900] }
+          ]
+        },
+        {
+          "id": "store",
+          "ui": {
+            "phase": "PHASE 4: STORE",
+            "title": "Write Back",
+            "description": "The result <b>6</b> travels from the ALU back to the <span class='hl'>Accumulator</span>.",
+            "noteTitle": "State Change",
+            "note": "The computer has now officially changed its state. The number 5 is gone, replaced by 6."
+          },
+          "initialState": {
+            "val_acc": "05"
+          },
+          "finalState": {
+            "val_acc": "06"
+          },
+          "animations": [
+            { "type": "camera", "to": [900, 300, 600, 337] },
+            {
+              "type": "packet",
+              "text": "6",
+              "from": [1225, 350],
+              "paths": [
+                { "path": "#path_alu_acc", "duration": 2.0 }
+              ]
+            },
+            { "type": "pulse", "target": "#node_acc" },
+            { "type": "setValue", "target": "val_acc", "value": "06" },
+            { "type": "camera", "to": [0, 0, 1600, 900] }
+          ]
+        },
+        {
+          "id": "complete",
+          "ui": {
+            "phase": "CYCLE COMPLETE",
+            "title": "Ready for Next Instruction",
+            "description": "The PC increments to 0x1B, and the whole process starts over.",
+            "noteTitle": "Speed",
+            "note": "This cycle repeats billions of times per second in modern processors."
+          },
+          "initialState": {},
+          "finalState": {
+            "val_pc": "0x1B",
+            "val_cu": "IDLE",
+            "val_alu": "WAIT"
+          },
+          "animations": [
+            { "type": "setValue", "target": "val_pc", "value": "0x1B" },
+            { "type": "setValue", "target": "val_cu", "value": "IDLE" },
+            { "type": "setValue", "target": "val_alu", "value": "WAIT" }
+          ]
+        }
+      ]
+    }
+  ]
+}

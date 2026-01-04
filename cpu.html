@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Von Neumann Architecture - Lesson Mode</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #020408;
+            --panel: #0f172a;
+            --blue: #38bdf8;
+            --pink: #f472b6;
+            --yellow: #facc15;
+            --wire: #475569;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+        body { margin: 0; overflow: hidden; display: flex; height: 100vh; background: var(--bg); font-family: 'Segoe UI', system-ui, sans-serif; color: white; }
+
+        /* --- SIDEBAR --- */
+        #sidebar {
+            width: 480px; background: var(--panel); border-right: 2px solid #1e293b;
+            display: flex; flex-direction: column; z-index: 20;
+            box-shadow: 10px 0 50px rgba(0,0,0,0.9);
+        }
+        .header { padding: 25px; background: #020617; border-bottom: 1px solid #1e293b; }
+        h1 { margin: 0; color: var(--blue); font-size: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        .progress { color: var(--text-muted); font-size: 12px; margin-top: 5px; font-weight: bold; }
+
+        .content { flex-grow: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px;}
+        
+        .phase-badge { 
+            background: #1e293b; color: #fff; padding: 6px 12px; border-radius: 4px; 
+            font-weight: bold; font-size: 12px; display: inline-block; border: 1px solid #334155; 
+            align-self: flex-start;
+        }
+        
+        #step-title { font-size: 24px; font-weight: bold; line-height: 1.2; color: #fff; margin-bottom: 10px; }
+        #step-desc { font-size: 16px; color: var(--text-main); line-height: 1.6; }
+
+        /* DEEP DIVE BOX */
+        .deep-dive {
+            background: #131c31; border: 1px solid #334155; border-radius: 8px; padding: 20px;
+            position: relative; overflow: hidden;
+        }
+        .deep-dive::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--yellow);
+        }
+        .dd-title { color: var(--yellow); font-weight: bold; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+        .dd-text { color: var(--text-muted); font-size: 14px; font-style: italic; line-height: 1.5; }
+
+        /* FOOTER CONTROLS */
+        .footer { padding: 20px; background: #020617; border-top: 1px solid #1e293b; display: flex; gap: 10px; }
+        
+        button {
+            padding: 16px; border: none; font-size: 15px; font-weight: bold;
+            cursor: pointer; text-transform: uppercase; border-radius: 6px; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        #nextBtn { background: var(--blue); color: #09090b; flex-grow: 2; }
+        #nextBtn:hover { background: #7dd3fc; }
+        #nextBtn:active { transform: translateY(1px); }
+
+        #replayBtn { background: transparent; color: var(--text-muted); border: 1px solid #334155; flex-grow: 1; }
+        #replayBtn:hover { background: #1e293b; color: #fff; }
+        #replayBtn:active { transform: translateY(1px); }
+
+        .hl { color: #fff; font-weight: bold; background: rgba(255,255,255,0.1); padding: 0 4px; border-radius: 3px; }
+
+        /* --- STAGE --- */
+        #stage { flex-grow: 1; background: #000; position: relative; }
+        svg { width: 100%; height: 100%; display: block; }
+        
+        .wire { fill: none; stroke: var(--wire); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+        .comp-bg { fill: #0f172a; stroke-width: 3; }
+        .comp-label { font-family: sans-serif; font-weight: bold; font-size: 20px; text-anchor: middle; fill-opacity: 0.7; }
+        .comp-val { font-family: monospace; font-size: 24px; text-anchor: middle; fill: #fff; font-weight: bold; }
+
+        .type-blue { stroke: var(--blue); fill: #0c1220; }
+        .text-blue { fill: var(--blue); }
+        .type-yellow { stroke: var(--yellow); fill: #1a1500; }
+        .text-yellow { fill: var(--yellow); }
+        .type-pink { stroke: var(--pink); fill: #1a0510; }
+        .text-pink { fill: var(--pink); }
+
+        #packet-grp { opacity: 0; pointer-events: none; }
+        .packet-bg { fill: #000; stroke: #fff; stroke-width: 2; }
+        .packet-text { fill: #fff; font-family: monospace; font-weight: bold; font-size: 16px; text-anchor: middle; dominant-baseline: middle; }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <div class="header">
+        <h1>CPU Architecture</h1>
+        <div class="progress" id="progress-text">Step 0 of 5</div>
+    </div>
+    <div class="content">
+        <div id="phase-badge" class="phase-badge">SYSTEM READY</div>
+        <div>
+            <div id="step-title">Introduction</div>
+            <div id="step-desc">
+                Welcome. This simulation visualizes how a CPU processes instructions.
+                <br><br>
+                We will follow one single <strong>Clock Cycle</strong> step-by-step.
+                <br><br>
+                Press <strong>NEXT STEP</strong> to begin.
+            </div>
+        </div>
+        
+        <div class="deep-dive">
+            <div class="dd-title">Teacher's Note</div>
+            <div class="dd-text" id="dd-text">
+                The components are separated into "Storage" (RAM) and "Processing" (CPU). The grey lines connecting them are the <strong>Bus</strong>.
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <button id="replayBtn">Replay Scene</button>
+        <button id="nextBtn">Next Step</button>
+    </div>
+</div>
+
+<div id="stage">
+    <svg id="main-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
+        <defs>
+            <filter id="glow-blue"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="glow-pink"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="glow-yellow"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <path id="wire_bus_main" class="wire" d="M 300 250 L 1400 250" />
+        <path id="path_ram_out" class="wire" d="M 300 350 L 300 250" />
+        <path id="path_ram_in" class="wire" d="M 300 250 L 300 350" />
+        <path id="path_pc_out" class="wire" d="M 700 350 L 700 250" />
+        <path id="path_ir_in" class="wire" d="M 850 250 L 850 350" />
+        <path id="path_ir_cu" class="wire" d="M 850 450 L 850 550" />
+        <path id="path_cu_alu" class="wire" d="M 850 650 L 850 700 L 1150 700 L 1150 450" />
+        <path id="path_acc_alu" class="wire" d="M 1300 550 L 1300 450" />
+        <path id="path_alu_acc" class="wire" d="M 1225 350 L 1225 300 L 1450 300 L 1450 600 L 1400 600" />
+
+        <g id="node_ram" transform="translate(200, 350)">
+            <rect class="comp-bg type-blue" width="200" height="400" rx="10" filter="url(#glow-blue)"/>
+            <text class="comp-label text-blue" x="100" y="40">RAM</text>
+            <text id="val_ram" class="comp-val" x="100" y="200">Addr 0x1A</text>
+            <text class="comp-val" x="100" y="230" font-size="16" fill="#aaa">[INC ACC]</text>
+        </g>
+
+        <rect x="600" y="150" width="900" height="700" rx="20" fill="none" stroke="#1e293b" stroke-width="4" stroke-dasharray="20 10" />
+        <text x="640" y="200" fill="#334155" font-size="30" font-weight="bold">CPU</text>
+
+        <g id="node_pc" transform="translate(650, 350)">
+            <rect class="comp-bg type-blue" width="100" height="100" rx="8" filter="url(#glow-blue)"/>
+            <text class="comp-label text-blue" x="50" y="30">PC</text>
+            <text id="val_pc" class="comp-val" x="50" y="70">0x1A</text>
+        </g>
+
+        <g id="node_ir" transform="translate(800, 350)">
+            <rect class="comp-bg type-blue" width="100" height="100" rx="8" filter="url(#glow-blue)"/>
+            <text class="comp-label text-blue" x="50" y="30">IR</text>
+            <text id="val_ir" class="comp-val" x="50" y="70">--</text>
+        </g>
+
+        <g id="node_cu" transform="translate(750, 550)">
+            <rect class="comp-bg type-yellow" width="200" height="100" rx="8" filter="url(#glow-yellow)" />
+            <text class="comp-label text-yellow" x="100" y="30">CONTROL</text>
+            <text id="val_cu" class="comp-val" x="100" y="70">IDLE</text>
+        </g>
+
+        <g id="node_alu" transform="translate(1100, 350)">
+            <path class="comp-bg type-pink" d="M 20 0 L 230 0 L 200 100 L 50 100 Z" filter="url(#glow-pink)"/>
+            <text class="comp-label text-pink" x="125" y="35">ALU</text>
+            <text id="val_alu" class="comp-val" x="125" y="75">WAIT</text>
+        </g>
+
+        <g id="node_acc" transform="translate(1250, 550)">
+            <rect class="comp-bg type-blue" width="150" height="100" rx="8" filter="url(#glow-blue)"/>
+            <text class="comp-label text-blue" x="75" y="30">ACC</text>
+            <text id="val_acc" class="comp-val" x="75" y="70">05</text>
+        </g>
+
+        <g id="packet-grp">
+            <rect class="packet-bg" x="-40" y="-20" width="80" height="40" rx="10" />
+            <text id="packet-text" class="packet-text" x="0" y="0">DATA</text>
+        </g>
+
+    </svg>
+</div>
+
+<script>
+    gsap.registerPlugin(MotionPathPlugin);
+
+    const tl = gsap.timeline({ paused: true });
+    const cam = { x: 0, y: 0, w: 1600, h: 900 };
+    
+    // Track current step for Replay Logic
+    let currentStepLabel = ""; 
+
+    // --- HELPERS ---
+    
+    function moveCam(x, y, w, h, duration=1.5) {
+        const svg = document.getElementById("main-svg");
+        return gsap.to(cam, {
+            x: x, y: y, w: w, h: h,
+            duration: duration,
+            ease: "power2.inOut",
+            onUpdate: () => {
+                svg.setAttribute("viewBox", `${cam.x} ${cam.y} ${cam.w} ${cam.h}`);
+            }
+        });
+    }
+
+    function updateUI(stepNum, phase, title, desc, note) {
+        document.getElementById('progress-text').innerText = `Step ${stepNum} of 5`;
+        document.getElementById('phase-badge').innerText = phase;
+        document.getElementById('step-title').innerText = title;
+        document.getElementById('step-desc').innerHTML = desc;
+        document.getElementById('dd-text').innerHTML = note;
+    }
+
+    function pulse(id) {
+        gsap.fromTo(id, 
+            { strokeWidth: 3, filter: "brightness(1)" }, 
+            { strokeWidth: 6, filter: "brightness(2)", duration: 0.2, yoyo: true, repeat: 3 }
+        );
+    }
+
+    // --- TIMELINE SEQUENCE ---
+    // Using slower durations for educational clarity
+
+    // 1. FETCH ADDRESS
+    tl.addLabel("step1");
+    tl.call(() => {
+        currentStepLabel = "step1";
+        updateUI(
+            "1", "PHASE 1: FETCH", "Address Request", 
+            "The <span class='hl'>PC (Program Counter)</span> sends the address <code>0x1A</code> to RAM.",
+            "<strong>Analogy:</strong> Think of the PC as your finger pointing to the current line in a book. It tells the system <em>where</em> to read next."
+        );
+    });
+    
+    // Zoom Left
+    tl.add(moveCam(150, 200, 800, 450));
+
+    const packet = document.getElementById("packet-grp");
+    const pText = document.getElementById("packet-text");
+    
+    tl.set(packet, { opacity: 1, x: 700, y: 300 }); 
+    tl.call(() => pText.textContent = "0x1A");
+    
+    // Slower movements
+    tl.to(packet, { motionPath: { path: "#path_pc_out", autoRotate: false, start: 0, end: 1 }, duration: 1.0, ease: "none" });
+    tl.to(packet, { motionPath: { path: "#wire_bus_main", autoRotate: false, start: 0.35, end: 0 }, duration: 2.0, ease: "none" });
+    tl.to(packet, { motionPath: { path: "#path_ram_in", autoRotate: false, start: 0, end: 1 }, duration: 1.0, ease: "none" });
+    
+    tl.call(() => { pulse("#node_ram"); document.getElementById('val_ram').textContent = "READING..."; });
+    tl.set(packet, { opacity: 0 });
+    
+    // Zoom Out
+    tl.add(moveCam(0, 0, 1600, 900));
+    tl.addPause();
+
+
+    // 2. FETCH DATA
+    tl.addLabel("step2");
+    tl.call(() => {
+        currentStepLabel = "step2";
+        updateUI(
+            "2", "PHASE 1: FETCH", "Instruction Return", 
+            "RAM finds the data at 0x1A: <span class='hl'>INC ACC</span>. It sends it back to the <span class='hl'>IR</span>.",
+            "<strong>Bottleneck:</strong> Fetching data from RAM takes much longer than processing it. Modern CPUs use 'Cache' to speed this up."
+        );
+    });
+    
+    tl.add(moveCam(150, 200, 800, 450));
+
+    tl.set(packet, { opacity: 1, x: 300, y: 350 });
+    tl.call(() => pText.textContent = "INC");
+
+    tl.to(packet, { motionPath: { path: "#path_ram_out", autoRotate: false }, duration: 1.0, ease: "none" });
+    tl.to(packet, { motionPath: { path: "#wire_bus_main", autoRotate: false, start: 0, end: 0.48 }, duration: 2.0, ease: "none" });
+    tl.to(packet, { motionPath: { path: "#path_ir_in", autoRotate: false }, duration: 1.0, ease: "none" });
+
+    tl.call(() => { pulse("#node_ir"); document.getElementById("val_ir").textContent = "INC ACC"; });
+    tl.set(packet, { opacity: 0 });
+    
+    tl.add(moveCam(0, 0, 1600, 900));
+    tl.addPause();
+
+
+    // 3. DECODE
+    tl.addLabel("step3");
+    tl.call(() => {
+        currentStepLabel = "step3";
+        updateUI(
+            "3", "PHASE 2: DECODE", "Control Logic", 
+            "The <span class='hl'>Control Unit</span> reads 'INC ACC' and translates it into the electrical command: <b>ADD 1</b>.",
+            "<strong>The Boss:</strong> The Control Unit decides which parts of the CPU need to turn on. Here, it prepares the ALU."
+        );
+    });
+    
+    // Zoom Center
+    tl.add(moveCam(600, 300, 800, 450));
+
+    tl.set(packet, { opacity: 1, x: 850, y: 450 });
+    tl.call(() => { pText.textContent = "OP"; pulse("#node_cu"); });
+    
+    tl.to(packet, { motionPath: { path: "#path_ir_cu", autoRotate: false }, duration: 1.5, ease: "power1.inOut" });
+    tl.call(() => document.getElementById("val_cu").textContent = "ADD 1");
+    tl.set(packet, { opacity: 0 });
+    
+    tl.add(moveCam(0, 0, 1600, 900));
+    tl.addPause();
+
+
+    // 4. EXECUTE
+    tl.addLabel("step4");
+    tl.call(() => {
+        currentStepLabel = "step4";
+        updateUI(
+            "4", "PHASE 3: EXECUTE", "ALU Calculation", 
+            "The <span class='hl'>ALU</span> receives 5 (from ACC) and +1 (from CU). It calculates the result: 6.",
+            "<strong>Math:</strong> The ALU (Arithmetic Logic Unit) is just a fancy calculator. It contains logic gates (AND, OR, XOR) to do math."
+        );
+    });
+    
+    // WIDER ZOOM: Includes CU (x:750) and ACC (x:1250)
+    tl.add(moveCam(700, 300, 800, 450));
+
+    // Packet 1: ACC -> ALU
+    tl.set(packet, { opacity: 1, x: 1300, y: 550 });
+    tl.call(() => pText.textContent = "5");
+    tl.to(packet, { motionPath: { path: "#path_acc_alu", autoRotate: false }, duration: 1.5 });
+    tl.set(packet, { opacity: 0 });
+
+    // Packet 2: CU -> ALU
+    tl.set(packet, { opacity: 1, x: 850, y: 650 });
+    tl.call(() => pText.textContent = "+1");
+    tl.to(packet, { motionPath: { path: "#path_cu_alu", autoRotate: false }, duration: 2.0 });
+    
+    tl.call(() => { pulse("#node_alu"); document.getElementById("val_alu").textContent = "6"; });
+    tl.set(packet, { opacity: 0 });
+    
+    tl.add(moveCam(0, 0, 1600, 900));
+    tl.addPause();
+
+
+    // 5. STORE
+    tl.addLabel("step5");
+    tl.call(() => {
+        currentStepLabel = "step5";
+        updateUI(
+            "5", "PHASE 4: STORE", "Write Back", 
+            "The result <b>6</b> travels from the ALU back to the <span class='hl'>Accumulator</span>.",
+            "<strong>State Change:</strong> The computer has now officially changed its state. The number 5 is gone, replaced by 6."
+        );
+    });
+    
+    // Zoom Right
+    tl.add(moveCam(900, 300, 600, 337));
+
+    tl.set(packet, { opacity: 1, x: 1225, y: 350 });
+    tl.call(() => pText.textContent = "6");
+    tl.to(packet, { motionPath: { path: "#path_alu_acc", autoRotate: false }, duration: 2.0 });
+
+    tl.call(() => { pulse("#node_acc"); document.getElementById("val_acc").textContent = "06"; });
+    tl.set(packet, { opacity: 0 });
+    
+    tl.add(moveCam(0, 0, 1600, 900));
+    tl.addPause();
+
+
+    // RESET
+    tl.addLabel("reset");
+    tl.call(() => {
+        currentStepLabel = "start";
+        updateUI(
+            "Done", "CYCLE COMPLETE", "Ready for Next Instruction", 
+            "The PC increments to 0x1B, and the whole process starts over.",
+            "Click Next to restart."
+        );
+        document.getElementById("val_pc").textContent = "0x1B";
+        document.getElementById("val_cu").textContent = "IDLE";
+        document.getElementById("val_alu").textContent = "WAIT";
+    });
+    tl.add(moveCam(0, 0, 1600, 900));
+
+
+    // --- CONTROLS ---
+    const nextBtn = document.getElementById("nextBtn");
+    const replayBtn = document.getElementById("replayBtn");
+
+    function goNext() {
+        if(tl.isActive()) {
+            // If playing, fast forward to end of current segment
+            tl.timeScale(10);
+        } else {
+            // If paused, play normal speed
+            tl.timeScale(1);
+            tl.play();
+        }
+    }
+
+    function doReplay() {
+        if(currentStepLabel) {
+            tl.seek(currentStepLabel); // Jump to start of label
+            tl.timeScale(1); // Normal speed
+            tl.play(); // Force play
+        }
+    }
+
+    nextBtn.onclick = goNext;
+    replayBtn.onclick = doReplay;
+    window.onkeydown = (e) => { 
+        if(e.code==="Space") goNext(); 
+    };
+
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelDeck</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="index-container">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+            <h1>PixelDeck</h1>
+            <p class="subtitle">Interactive animated visualizations for learning</p>
+        </div>
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme">&#9790;</button>
+    </div>
+
+    <div class="topic-grid" id="topic-grid">
+        <a class="topic-card" href="./viewer.html#cpu-architecture">
+            <h2>CPU Architecture</h2>
+            <p>Von Neumann fetch-execute cycle visualization</p>
+            <div class="meta">Click to start</div>
+        </a>
+    </div>
+</div>
+
+<script>
+    // Theme handling
+    (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'light' ? 'dark' : 'light';
+
+            if (newTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+
+            localStorage.setItem('theme', newTheme);
+            this.innerHTML = newTheme === 'light' ? '&#9788;' : '&#9790;';
+        });
+
+        // Set initial icon
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.getElementById('themeToggle').innerHTML = theme === 'light' ? '&#9788;' : '&#9790;';
+    })();
+</script>
+
+</body>
+</html>
