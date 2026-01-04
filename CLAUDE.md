@@ -36,7 +36,19 @@ Requires a local server due to ES modules. Options:
 - `python -m http.server 8000` (Python 3)
 - VS Code Live Server extension
 
-Then open `http://localhost:PORT/` for topic selector, or `http://localhost:PORT/viewer.html?topic=cpu-architecture` for direct topic access.
+Then open `http://localhost:PORT/` for topic selector, or `http://localhost:PORT/viewer.html#cpu-architecture` for direct topic access.
+
+## Running Tests
+
+```bash
+npm install
+npm test
+```
+
+Tests cover:
+- State machine navigation logic (30 tests)
+- Topic JSON validation (10 tests)
+- Validates all topics in `topics/` directory
 
 ## Content Hierarchy
 

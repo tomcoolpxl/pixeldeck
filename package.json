@@ -1,0 +1,15 @@
+{
+  "name": "pixeldeck",
+  "version": "1.0.0",
+  "description": "Interactive animated visualizations for learning",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "serve": "npx serve ."
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "keywords": ["education", "visualization", "animation", "presentation"],
+  "license": "MIT"
+}
