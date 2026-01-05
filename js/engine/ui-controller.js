@@ -177,13 +177,22 @@ export class UIController {
      */
     updatePhaseIndicator(activePhase) {
         const phases = ['fetch', 'decode', 'execute', 'store'];
-        const colors = {
+
+        // Active colors (bright)
+        const activeColors = {
             fetch: { bg: '#0c4a6e', border: '#38bdf8', text: '#38bdf8' },
             decode: { bg: '#422006', border: '#facc15', text: '#facc15' },
             execute: { bg: '#500724', border: '#f472b6', text: '#f472b6' },
             store: { bg: '#052e16', border: '#22c55e', text: '#22c55e' }
         };
-        const inactiveColor = '#64748b';
+
+        // Inactive colors (faded versions of the phase colors)
+        const inactiveColors = {
+            fetch: { text: '#1e5a7e' },    // faded blue
+            decode: { text: '#6b5a1f' },   // faded yellow
+            execute: { text: '#6b3a4a' },  // faded pink
+            store: { text: '#2a5a3a' }     // faded green
+        };
 
         phases.forEach(phase => {
             const bg = document.getElementById(`phase-bg-${phase}`);
@@ -191,15 +200,15 @@ export class UIController {
 
             if (bg && text) {
                 if (phase === activePhase) {
-                    // Highlight active phase
-                    bg.setAttribute('fill', colors[phase].bg);
-                    bg.setAttribute('stroke', colors[phase].border);
-                    text.setAttribute('fill', colors[phase].text);
+                    // Highlight active phase with full colors
+                    bg.setAttribute('fill', activeColors[phase].bg);
+                    bg.setAttribute('stroke', activeColors[phase].border);
+                    text.setAttribute('fill', activeColors[phase].text);
                 } else {
-                    // Reset inactive phases
+                    // Faded phase-appropriate colors for inactive phases
                     bg.setAttribute('fill', 'transparent');
                     bg.setAttribute('stroke', 'transparent');
-                    text.setAttribute('fill', inactiveColor);
+                    text.setAttribute('fill', inactiveColors[phase].text);
                 }
             }
         });

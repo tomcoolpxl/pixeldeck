@@ -21,9 +21,9 @@
           "ui": {
             "phase": "SYSTEM READY",
             "title": "Introduction",
-            "description": "Welcome. This simulation visualizes how a CPU processes instructions.<br><br>We will follow one single <strong>Clock Cycle</strong> step-by-step.<br><br>Press <strong>NEXT STEP</strong> to begin.",
-            "noteTitle": "Overview",
-            "note": "The components are separated into \"Storage\" (RAM) and \"Processing\" (CPU). The grey lines connecting them are the <strong>Bus</strong>."
+            "description": "Welcome! This simulation shows how a <span class='hl'>CPU (Central Processing Unit)</span> - the \"brain\" of your computer - executes instructions.<br><br>We'll follow one complete <strong>Instruction Cycle</strong> step-by-step.<br><br>Press <strong>NEXT STEP</strong> to begin.",
+            "noteTitle": "Components Overview",
+            "note": "<strong>RAM</strong> = Memory that stores instructions and data<br><strong>PC</strong> = Program Counter (tracks current instruction)<br><strong>IR</strong> = Instruction Register (holds current instruction)<br><strong>CU</strong> = Control Unit (directs operations)<br><strong>ALU</strong> = Arithmetic Logic Unit (does math)<br><strong>ACC</strong> = Accumulator (stores results)"
           },
           "animations": []
         },
@@ -31,11 +31,11 @@
           "id": "fetch-address",
           "ui": {
             "phase": "PHASE 1: FETCH",
-            "phaseExplanation": "The CPU retrieves the next instruction from memory. This is like reading the next line in a recipe book.",
+            "phaseExplanation": "The CPU retrieves the next instruction from memory. Like reading the next line in a recipe book.",
             "title": "Address Request",
-            "description": "The <span class='hl'>PC (Program Counter)</span> sends the address <code>0x1A</code> to RAM.",
-            "noteTitle": "Analogy",
-            "note": "Think of the PC as your finger pointing to the current line in a book. It tells the system <em>where</em> to read next."
+            "description": "The <span class='hl'>PC (Program Counter)</span> sends address <code>0x1A</code> to RAM.<br><br><em>Address 0x1A is a memory location written in hexadecimal (base-16) notation.</em>",
+            "noteTitle": "What is the Program Counter?",
+            "note": "The PC keeps track of which instruction to execute next. Think of it as your finger pointing to the current line in a recipe. After each instruction, it automatically moves to the next one."
           },
           "initialState": {
             "val_ram": "Addr 0x1A"
@@ -66,11 +66,11 @@
           "id": "fetch-data",
           "ui": {
             "phase": "PHASE 1: FETCH",
-            "phaseExplanation": "The CPU retrieves the next instruction from memory. This is like reading the next line in a recipe book.",
+            "phaseExplanation": "The CPU retrieves the next instruction from memory. Like reading the next line in a recipe book.",
             "title": "Instruction Return",
-            "description": "RAM finds the data at 0x1A: <span class='hl'>INC ACC</span>. It sends it back to the <span class='hl'>IR</span>.",
-            "noteTitle": "Why It's Slow",
-            "note": "Fetching data from RAM takes much longer than processing it. Modern CPUs use 'Cache' to speed this up."
+            "description": "RAM finds instruction <span class='hl'>INC ACC</span> at address 0x1A and sends it to the <span class='hl'>IR (Instruction Register)</span>.<br><br><em>INC ACC means \"increment the accumulator\" - add 1 to the stored value.</em>",
+            "noteTitle": "What is the Instruction Register?",
+            "note": "The IR temporarily holds the current instruction being executed. It's like a sticky note where you write down the current recipe step so you don't forget it while working."
           },
           "initialState": {
             "val_ram": "INC ACC",
@@ -101,10 +101,10 @@
           "ui": {
             "phase": "PHASE 2: DECODE",
             "phaseExplanation": "The CPU interprets the instruction to understand what operation to perform. Like translating a recipe step into actions.",
-            "title": "Control Logic",
-            "description": "The <span class='hl'>Control Unit</span> reads 'INC ACC' and translates it into the electrical command: <b>ADD 1</b>.",
-            "noteTitle": "The Boss",
-            "note": "The Control Unit decides which parts of the CPU need to turn on. Here, it prepares the ALU."
+            "title": "Control Unit Decodes",
+            "description": "The <span class='hl'>CU (Control Unit)</span> reads 'INC ACC' and figures out what to do: it needs to tell the ALU to <b>ADD 1</b> to the current value.",
+            "noteTitle": "What is the Control Unit?",
+            "note": "The CU is the \"manager\" of the CPU. It reads instructions and sends signals to other components telling them what to do. It doesn't do calculations itself - it just coordinates everything."
           },
           "initialState": {
             "val_cu": "IDLE"
@@ -132,10 +132,10 @@
           "ui": {
             "phase": "PHASE 3: EXECUTE",
             "phaseExplanation": "The CPU performs the actual operation - calculations, comparisons, or data movement. This is where the real work happens!",
-            "title": "ALU Calculation",
-            "description": "The <span class='hl'>ALU</span> receives 5 (from ACC) and +1 (from CU). It calculates the result: 6.",
-            "noteTitle": "How It Works",
-            "note": "The ALU (Arithmetic Logic Unit) is just a fancy calculator. It contains logic gates (AND, OR, XOR) to do math."
+            "title": "ALU Calculates",
+            "description": "The <span class='hl'>ALU (Arithmetic Logic Unit)</span> receives two inputs:<br>• The current value <b>5</b> from the Accumulator<br>• The operation <b>+1</b> from the Control Unit<br><br>Result: 5 + 1 = <b>6</b>",
+            "noteTitle": "What is the ALU?",
+            "note": "The ALU is the calculator of the CPU. It can do arithmetic (add, subtract, multiply) and logic operations (AND, OR, compare). All the actual \"computing\" happens here!"
           },
           "initialState": {
             "val_alu": "WAIT"
@@ -170,11 +170,11 @@
           "id": "store",
           "ui": {
             "phase": "PHASE 4: STORE",
-            "phaseExplanation": "The CPU saves the result of the operation back to a register or memory. The final step that preserves the work done.",
-            "title": "Write Back",
-            "description": "The result <b>6</b> travels from the ALU back to the <span class='hl'>Accumulator</span>.",
-            "noteTitle": "State Change",
-            "note": "The computer has now officially changed its state. The number 5 is gone, replaced by 6."
+            "phaseExplanation": "The CPU saves the result back to a register or memory. The final step that preserves the work done.",
+            "title": "Store in Accumulator",
+            "description": "The result <b>6</b> is stored in the <span class='hl'>ACC (Accumulator)</span>.<br><br>The old value (5) is overwritten with the new value (6).",
+            "noteTitle": "What is the Accumulator?",
+            "note": "The ACC is a special register that stores the result of calculations. It's called \"accumulator\" because results accumulate (build up) there. Think of it as the calculator's display showing the current answer."
           },
           "initialState": {
             "val_acc": "05"
@@ -202,9 +202,9 @@
           "ui": {
             "phase": "CYCLE COMPLETE",
             "title": "Ready for Next Instruction",
-            "description": "The PC increments to 0x1B, and the whole process starts over.",
-            "noteTitle": "Speed",
-            "note": "This cycle repeats billions of times per second in modern processors."
+            "description": "The instruction is complete! The <span class='hl'>PC</span> automatically increments to <code>0x1B</code> (the next address), and the whole cycle starts over.<br><br>We just executed: <b>INC ACC</b> (5 → 6)",
+            "noteTitle": "The Never-Ending Cycle",
+            "note": "This Fetch → Decode → Execute → Store cycle repeats <em>billions</em> of times per second in modern CPUs. A 3 GHz processor does this 3,000,000,000 times every second!"
           },
           "initialState": {},
           "finalState": {
