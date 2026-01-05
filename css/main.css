@@ -458,6 +458,15 @@ button:disabled {
     fill: var(--pink);
 }
 
+.type-green {
+    stroke: #22c55e;
+    fill: #022c22;
+}
+
+.text-green {
+    fill: #22c55e;
+}
+
 #packet-grp {
     opacity: 0;
     pointer-events: none;
