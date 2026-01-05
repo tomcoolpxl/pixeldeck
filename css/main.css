@@ -586,3 +586,35 @@ button:disabled {
     font-size: 12px;
     color: var(--text-muted);
 }
+
+/* --- TRUTH TABLE STYLES --- */
+.truth-table-bg {
+    fill: var(--panel);
+    stroke: var(--border-light);
+    stroke-width: 2;
+}
+
+.truth-table-title {
+    fill: var(--text-muted);
+}
+
+.truth-table-header {
+    fill: var(--text-muted);
+}
+
+.truth-table-line {
+    stroke: var(--border-light);
+}
+
+.truth-table-red {
+    fill: #ef4444;
+}
+
+.truth-table-green {
+    fill: #22c55e;
+}
+
+#packet-grp-2 {
+    opacity: 0;
+    pointer-events: none;
+}

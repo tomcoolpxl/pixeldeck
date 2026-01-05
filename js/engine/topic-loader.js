@@ -97,8 +97,15 @@ export class TopicLoader {
         if (slide && slide.components) {
             Object.entries(slide.components).forEach(([id, value]) => {
                 const el = document.getElementById(id);
-                if (el) {
+                if (!el) return;
+
+                if (typeof value === 'string') {
                     el.textContent = value;
+                } else if (typeof value === 'object') {
+                    // Object with SVG attributes (transform, fill, filter, etc.)
+                    Object.entries(value).forEach(([attr, attrValue]) => {
+                        el.setAttribute(attr, attrValue);
+                    });
                 }
             });
         }
@@ -112,8 +119,15 @@ export class TopicLoader {
 
         Object.entries(slide.components).forEach(([id, value]) => {
             const el = document.getElementById(id);
-            if (el) {
+            if (!el) return;
+
+            if (typeof value === 'string') {
                 el.textContent = value;
+            } else if (typeof value === 'object') {
+                // Object with SVG attributes (transform, fill, filter, etc.)
+                Object.entries(value).forEach(([attr, attrValue]) => {
+                    el.setAttribute(attr, attrValue);
+                });
             }
         });
     }

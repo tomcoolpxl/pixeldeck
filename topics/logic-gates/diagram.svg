@@ -1,0 +1,158 @@
+<svg id="main-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="glow-blue"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="glow-pink"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="glow-yellow"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="glow-green"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+
+    <!-- ==================== AND GATE SECTION ==================== -->
+
+    <!-- AND Gate Title -->
+    <text x="400" y="60" fill="#94a3b8" font-size="32" font-weight="bold" text-anchor="middle" font-family="sans-serif">AND GATE</text>
+    <text x="400" y="90" fill="#64748b" font-size="16" text-anchor="middle" font-family="sans-serif">Output is 1 only when BOTH inputs are 1</text>
+
+    <!-- Wires for AND gate -->
+    <path id="path_and_a_to_gate" class="wire" d="M 270 220 L 330 220" />
+    <path id="path_and_b_to_gate" class="wire" d="M 270 320 L 330 320" />
+    <path id="path_and_gate_to_out" class="wire" d="M 510 270 L 600 270" />
+
+    <!-- Input A -->
+    <g id="node_and_input_a" transform="translate(120, 170)">
+        <rect class="comp-bg type-blue" width="150" height="100" rx="10" filter="url(#glow-blue)"/>
+        <text class="comp-label text-blue" x="75" y="35">INPUT A</text>
+        <text id="val_and_a" class="comp-val" x="75" y="70">0</text>
+    </g>
+
+    <!-- Input B -->
+    <g id="node_and_input_b" transform="translate(120, 270)">
+        <rect class="comp-bg type-blue" width="150" height="100" rx="10" filter="url(#glow-blue)"/>
+        <text class="comp-label text-blue" x="75" y="35">INPUT B</text>
+        <text id="val_and_b" class="comp-val" x="75" y="70">0</text>
+    </g>
+
+    <!-- AND Gate - Standard IEEE Symbol (D-shape) -->
+    <g id="node_and_gate" transform="translate(330, 170)">
+        <path class="comp-bg type-pink" d="M 0 0 L 90 0 Q 180 0 180 100 Q 180 200 90 200 L 0 200 L 0 0 Z" filter="url(#glow-pink)"/>
+        <text class="comp-label text-pink" x="80" y="90">AND</text>
+        <text id="val_and_gate" class="comp-val" x="80" y="120">A · B</text>
+    </g>
+
+    <!-- Output -->
+    <g id="node_and_output" transform="translate(600, 220)">
+        <rect class="comp-bg type-green" width="150" height="100" rx="10" filter="url(#glow-green)"/>
+        <text class="comp-label text-green" x="75" y="35">OUTPUT</text>
+        <text id="val_and_out" class="comp-val" x="75" y="70">0</text>
+    </g>
+
+    <!-- Truth Table for AND -->
+    <g id="and_truth_table" transform="translate(120, 420)">
+        <rect class="truth-table-bg" x="0" y="0" width="220" height="220" rx="8"/>
+        <text class="truth-table-title" x="110" y="30" font-size="14" font-weight="bold" text-anchor="middle" font-family="sans-serif">AND TRUTH TABLE</text>
+        <line class="truth-table-line" x1="10" y1="45" x2="210" y2="45" stroke-width="1"/>
+        <text class="truth-table-header" x="45" y="70" font-size="14" text-anchor="middle" font-family="monospace">A</text>
+        <text class="truth-table-header" x="110" y="70" font-size="14" text-anchor="middle" font-family="monospace">B</text>
+        <text class="truth-table-header" x="175" y="70" font-size="14" text-anchor="middle" font-family="monospace">OUT</text>
+        <line class="truth-table-line" x1="10" y1="85" x2="210" y2="85" stroke-width="1"/>
+        <g id="tt_and_row1">
+            <text class="truth-table-red" x="45" y="115" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+            <text class="truth-table-red" x="110" y="115" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+            <text class="truth-table-red" x="175" y="115" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+        </g>
+        <g id="tt_and_row2">
+            <text class="truth-table-red" x="45" y="145" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+            <text class="truth-table-red" x="110" y="145" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+            <text class="truth-table-red" x="175" y="145" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+        </g>
+        <g id="tt_and_row3">
+            <text class="truth-table-red" x="45" y="175" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+            <text class="truth-table-red" x="110" y="175" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+            <text class="truth-table-red" x="175" y="175" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+        </g>
+        <g id="tt_and_row4">
+            <text class="truth-table-green" x="45" y="205" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+            <text class="truth-table-green" x="110" y="205" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+            <text class="truth-table-green" x="175" y="205" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+        </g>
+    </g>
+
+    <!-- ==================== OR GATE SECTION ==================== -->
+
+    <!-- OR Gate Title -->
+    <text x="1150" y="60" fill="#94a3b8" font-size="32" font-weight="bold" text-anchor="middle" font-family="sans-serif">OR GATE</text>
+    <text x="1150" y="90" fill="#64748b" font-size="16" text-anchor="middle" font-family="sans-serif">Output is 1 when ANY input is 1</text>
+
+    <!-- Wires for OR gate -->
+    <path id="path_or_a_to_gate" class="wire" d="M 1020 220 L 1090 220" />
+    <path id="path_or_b_to_gate" class="wire" d="M 1020 320 L 1090 320" />
+    <path id="path_or_gate_to_out" class="wire" d="M 1270 270 L 1350 270" />
+
+    <!-- Input A -->
+    <g id="node_or_input_a" transform="translate(870, 170)">
+        <rect class="comp-bg type-yellow" width="150" height="100" rx="10" filter="url(#glow-yellow)"/>
+        <text class="comp-label text-yellow" x="75" y="35">INPUT A</text>
+        <text id="val_or_a" class="comp-val" x="75" y="70">0</text>
+    </g>
+
+    <!-- Input B -->
+    <g id="node_or_input_b" transform="translate(870, 270)">
+        <rect class="comp-bg type-yellow" width="150" height="100" rx="10" filter="url(#glow-yellow)"/>
+        <text class="comp-label text-yellow" x="75" y="35">INPUT B</text>
+        <text id="val_or_b" class="comp-val" x="75" y="70">0</text>
+    </g>
+
+    <!-- OR Gate - Standard IEEE Symbol (curved shield shape) -->
+    <g id="node_or_gate" transform="translate(1080, 170)">
+        <path class="comp-bg type-pink" d="M 0 0 Q 40 100 0 200 L 90 200 Q 190 200 190 100 Q 190 0 90 0 L 0 0 Z" filter="url(#glow-pink)"/>
+        <text class="comp-label text-pink" x="90" y="90">OR</text>
+        <text id="val_or_gate" class="comp-val" x="90" y="120">A + B</text>
+    </g>
+
+    <!-- Output -->
+    <g id="node_or_output" transform="translate(1350, 220)">
+        <rect class="comp-bg type-green" width="150" height="100" rx="10" filter="url(#glow-green)"/>
+        <text class="comp-label text-green" x="75" y="35">OUTPUT</text>
+        <text id="val_or_out" class="comp-val" x="75" y="70">0</text>
+    </g>
+
+    <!-- Truth Table for OR -->
+    <g id="or_truth_table" transform="translate(1230, 420)">
+        <rect class="truth-table-bg" x="0" y="0" width="220" height="220" rx="8"/>
+        <text class="truth-table-title" x="110" y="30" font-size="14" font-weight="bold" text-anchor="middle" font-family="sans-serif">OR TRUTH TABLE</text>
+        <line class="truth-table-line" x1="10" y1="45" x2="210" y2="45" stroke-width="1"/>
+        <text class="truth-table-header" x="45" y="70" font-size="14" text-anchor="middle" font-family="monospace">A</text>
+        <text class="truth-table-header" x="110" y="70" font-size="14" text-anchor="middle" font-family="monospace">B</text>
+        <text class="truth-table-header" x="175" y="70" font-size="14" text-anchor="middle" font-family="monospace">OUT</text>
+        <line class="truth-table-line" x1="10" y1="85" x2="210" y2="85" stroke-width="1"/>
+        <g id="tt_or_row1">
+            <text class="truth-table-red" x="45" y="115" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+            <text class="truth-table-red" x="110" y="115" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+            <text class="truth-table-red" x="175" y="115" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+        </g>
+        <g id="tt_or_row2">
+            <text class="truth-table-green" x="45" y="145" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+            <text class="truth-table-green" x="110" y="145" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+            <text class="truth-table-green" x="175" y="145" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+        </g>
+        <g id="tt_or_row3">
+            <text class="truth-table-green" x="45" y="175" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+            <text class="truth-table-green" x="110" y="175" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">0</text>
+            <text class="truth-table-green" x="175" y="175" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+        </g>
+        <g id="tt_or_row4">
+            <text class="truth-table-green" x="45" y="205" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+            <text class="truth-table-green" x="110" y="205" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+            <text class="truth-table-green" x="175" y="205" font-size="16" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+        </g>
+    </g>
+
+    <!-- Data Packets (two for parallel animations) -->
+    <g id="packet-grp">
+        <rect class="packet-bg" x="-30" y="-15" width="60" height="30" rx="8" />
+        <text id="packet-text" class="packet-text" x="0" y="1">1</text>
+    </g>
+    <g id="packet-grp-2">
+        <rect class="packet-bg" x="-30" y="-15" width="60" height="30" rx="8" />
+        <text id="packet-text-2" class="packet-text" x="0" y="1">1</text>
+    </g>
+</svg>

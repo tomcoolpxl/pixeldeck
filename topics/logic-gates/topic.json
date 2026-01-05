@@ -1,0 +1,295 @@
+{
+  "id": "logic-gates",
+  "title": "Logic Gates",
+  "description": "Understanding AND and OR gates - the building blocks of digital logic.",
+  "slides": [
+    {
+      "id": "and-gate",
+      "title": "The AND Gate",
+      "diagram": "diagram.svg",
+      "components": {
+        "val_and_a": "0",
+        "val_and_b": "0",
+        "val_and_out": "0"
+      },
+      "steps": [
+        {
+          "id": "and-intro",
+          "ui": {
+            "phase": "AND GATE",
+            "phaseExplanation": "The AND gate outputs 1 only when <b>both</b> inputs are 1.",
+            "title": "Introduction to AND",
+            "description": "This is an <span class='hl'>AND gate</span> using the standard IEEE symbol (D-shape). It has two inputs (A and B) and one output.<br><br>The AND gate performs logical multiplication: the output is 1 only when <b>both</b> A <b>AND</b> B are 1.",
+            "noteTitle": "Boolean Algebra",
+            "note": "In Boolean algebra, AND is written as A times B or simply AB. It is like multiplication: anything times 0 is 0."
+          },
+          "animations": [
+            { "type": "pulse", "target": "#node_and_gate" }
+          ]
+        },
+        {
+          "id": "and-demo",
+          "ui": {
+            "phase": "AND GATE",
+            "phaseExplanation": "Testing all 4 input combinations",
+            "title": "All Combinations",
+            "description": "Watch all four input combinations cycle through the AND gate. Only when <b>both</b> inputs are 1 does the output become 1.",
+            "noteTitle": "Truth Table",
+            "note": "0 AND 0 = 0<br>0 AND 1 = 0<br>1 AND 0 = 0<br>1 AND 1 = 1"
+          },
+          "finalState": {
+            "val_and_a": "1",
+            "val_and_b": "1",
+            "val_and_out": "1"
+          },
+          "animations": [
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "setValue", "target": "val_and_a", "value": "0" },
+                { "type": "setValue", "target": "val_and_b", "value": "0" },
+                { "type": "pulse", "target": "#node_and_input_a" },
+                { "type": "pulse", "target": "#node_and_input_b" }
+              ]
+            },
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "packet", "text": "0", "from": [270, 220], "paths": [{ "path": "#path_and_a_to_gate", "duration": 0.4 }] },
+                { "type": "packet", "text": "0", "from": [270, 320], "paths": [{ "path": "#path_and_b_to_gate", "duration": 0.4 }] }
+              ]
+            },
+            { "type": "packet", "text": "0", "from": [510, 270], "paths": [{ "path": "#path_and_gate_to_out", "duration": 0.4 }] },
+            { "type": "setValue", "target": "val_and_out", "value": "0" },
+            { "type": "pulse", "target": "#node_and_output" },
+            { "type": "wait", "duration": 0.3 },
+
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "setValue", "target": "val_and_a", "value": "0" },
+                { "type": "setValue", "target": "val_and_b", "value": "1" },
+                { "type": "pulse", "target": "#node_and_input_b" }
+              ]
+            },
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "packet", "text": "0", "from": [270, 220], "paths": [{ "path": "#path_and_a_to_gate", "duration": 0.4 }] },
+                { "type": "packet", "text": "1", "from": [270, 320], "paths": [{ "path": "#path_and_b_to_gate", "duration": 0.4 }] }
+              ]
+            },
+            { "type": "packet", "text": "0", "from": [510, 270], "paths": [{ "path": "#path_and_gate_to_out", "duration": 0.4 }] },
+            { "type": "setValue", "target": "val_and_out", "value": "0" },
+            { "type": "pulse", "target": "#node_and_output" },
+            { "type": "wait", "duration": 0.3 },
+
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "setValue", "target": "val_and_a", "value": "1" },
+                { "type": "setValue", "target": "val_and_b", "value": "0" },
+                { "type": "pulse", "target": "#node_and_input_a" }
+              ]
+            },
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "packet", "text": "1", "from": [270, 220], "paths": [{ "path": "#path_and_a_to_gate", "duration": 0.4 }] },
+                { "type": "packet", "text": "0", "from": [270, 320], "paths": [{ "path": "#path_and_b_to_gate", "duration": 0.4 }] }
+              ]
+            },
+            { "type": "packet", "text": "0", "from": [510, 270], "paths": [{ "path": "#path_and_gate_to_out", "duration": 0.4 }] },
+            { "type": "setValue", "target": "val_and_out", "value": "0" },
+            { "type": "pulse", "target": "#node_and_output" },
+            { "type": "wait", "duration": 0.3 },
+
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "setValue", "target": "val_and_a", "value": "1" },
+                { "type": "setValue", "target": "val_and_b", "value": "1" },
+                { "type": "pulse", "target": "#node_and_input_a" },
+                { "type": "pulse", "target": "#node_and_input_b" }
+              ]
+            },
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "packet", "text": "1", "from": [270, 220], "paths": [{ "path": "#path_and_a_to_gate", "duration": 0.4 }] },
+                { "type": "packet", "text": "1", "from": [270, 320], "paths": [{ "path": "#path_and_b_to_gate", "duration": 0.4 }] }
+              ]
+            },
+            { "type": "packet", "text": "1", "from": [510, 270], "paths": [{ "path": "#path_and_gate_to_out", "duration": 0.4 }] },
+            { "type": "setValue", "target": "val_and_out", "value": "1" },
+            { "type": "pulse", "target": "#node_and_output" }
+          ]
+        },
+        {
+          "id": "and-truth-table",
+          "ui": {
+            "phase": "AND GATE",
+            "phaseExplanation": "Summary of AND gate behavior",
+            "title": "AND Truth Table",
+            "description": "The truth table shows all possible input combinations and their outputs.<br><br>AND only outputs <b>1</b> in one case: when both inputs are 1 (shown in green). All other combinations output 0 (shown in red).",
+            "noteTitle": "Key Insight",
+            "note": "AND is like a strict bouncer: everyone must have permission (be 1) for entry (output 1)."
+          },
+          "animations": [
+            { "type": "pulse", "target": "#and_truth_table" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "or-gate",
+      "title": "The OR Gate",
+      "diagram": "diagram.svg",
+      "components": {
+        "val_or_a": "0",
+        "val_or_b": "0",
+        "val_or_out": "0"
+      },
+      "steps": [
+        {
+          "id": "or-intro",
+          "ui": {
+            "phase": "OR GATE",
+            "phaseExplanation": "The OR gate outputs 1 when <b>any</b> input is 1.",
+            "title": "Introduction to OR",
+            "description": "This is an <span class='hl'>OR gate</span> using the standard IEEE symbol (curved shield). Like AND, it has two inputs and one output.<br><br>The OR gate performs logical addition: the output is 1 when <b>either</b> A <b>OR</b> B (or both) are 1.",
+            "noteTitle": "Boolean Algebra",
+            "note": "In Boolean algebra, OR is written as A + B. It is more lenient than AND: just one input being 1 is enough."
+          },
+          "animations": [
+            { "type": "pulse", "target": "#node_or_gate" }
+          ]
+        },
+        {
+          "id": "or-demo",
+          "ui": {
+            "phase": "OR GATE",
+            "phaseExplanation": "Testing all 4 input combinations",
+            "title": "All Combinations",
+            "description": "Watch all four input combinations cycle through the OR gate. Any input being 1 produces output 1. Only 0,0 produces 0.",
+            "noteTitle": "Truth Table",
+            "note": "0 OR 0 = 0<br>0 OR 1 = 1<br>1 OR 0 = 1<br>1 OR 1 = 1"
+          },
+          "finalState": {
+            "val_or_a": "1",
+            "val_or_b": "1",
+            "val_or_out": "1"
+          },
+          "animations": [
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "setValue", "target": "val_or_a", "value": "0" },
+                { "type": "setValue", "target": "val_or_b", "value": "0" },
+                { "type": "pulse", "target": "#node_or_input_a" },
+                { "type": "pulse", "target": "#node_or_input_b" }
+              ]
+            },
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "packet", "text": "0", "from": [1020, 220], "paths": [{ "path": "#path_or_a_to_gate", "duration": 0.4 }] },
+                { "type": "packet", "text": "0", "from": [1020, 320], "paths": [{ "path": "#path_or_b_to_gate", "duration": 0.4 }] }
+              ]
+            },
+            { "type": "packet", "text": "0", "from": [1270, 270], "paths": [{ "path": "#path_or_gate_to_out", "duration": 0.4 }] },
+            { "type": "setValue", "target": "val_or_out", "value": "0" },
+            { "type": "pulse", "target": "#node_or_output" },
+            { "type": "wait", "duration": 0.3 },
+
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "setValue", "target": "val_or_a", "value": "0" },
+                { "type": "setValue", "target": "val_or_b", "value": "1" },
+                { "type": "pulse", "target": "#node_or_input_b" }
+              ]
+            },
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "packet", "text": "0", "from": [1020, 220], "paths": [{ "path": "#path_or_a_to_gate", "duration": 0.4 }] },
+                { "type": "packet", "text": "1", "from": [1020, 320], "paths": [{ "path": "#path_or_b_to_gate", "duration": 0.4 }] }
+              ]
+            },
+            { "type": "packet", "text": "1", "from": [1270, 270], "paths": [{ "path": "#path_or_gate_to_out", "duration": 0.4 }] },
+            { "type": "setValue", "target": "val_or_out", "value": "1" },
+            { "type": "pulse", "target": "#node_or_output" },
+            { "type": "wait", "duration": 0.3 },
+
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "setValue", "target": "val_or_a", "value": "1" },
+                { "type": "setValue", "target": "val_or_b", "value": "0" },
+                { "type": "pulse", "target": "#node_or_input_a" }
+              ]
+            },
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "packet", "text": "1", "from": [1020, 220], "paths": [{ "path": "#path_or_a_to_gate", "duration": 0.4 }] },
+                { "type": "packet", "text": "0", "from": [1020, 320], "paths": [{ "path": "#path_or_b_to_gate", "duration": 0.4 }] }
+              ]
+            },
+            { "type": "packet", "text": "1", "from": [1270, 270], "paths": [{ "path": "#path_or_gate_to_out", "duration": 0.4 }] },
+            { "type": "setValue", "target": "val_or_out", "value": "1" },
+            { "type": "pulse", "target": "#node_or_output" },
+            { "type": "wait", "duration": 0.3 },
+
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "setValue", "target": "val_or_a", "value": "1" },
+                { "type": "setValue", "target": "val_or_b", "value": "1" },
+                { "type": "pulse", "target": "#node_or_input_a" },
+                { "type": "pulse", "target": "#node_or_input_b" }
+              ]
+            },
+            {
+              "type": "parallel",
+              "animations": [
+                { "type": "packet", "text": "1", "from": [1020, 220], "paths": [{ "path": "#path_or_a_to_gate", "duration": 0.4 }] },
+                { "type": "packet", "text": "1", "from": [1020, 320], "paths": [{ "path": "#path_or_b_to_gate", "duration": 0.4 }] }
+              ]
+            },
+            { "type": "packet", "text": "1", "from": [1270, 270], "paths": [{ "path": "#path_or_gate_to_out", "duration": 0.4 }] },
+            { "type": "setValue", "target": "val_or_out", "value": "1" },
+            { "type": "pulse", "target": "#node_or_output" }
+          ]
+        },
+        {
+          "id": "or-truth-table",
+          "ui": {
+            "phase": "OR GATE",
+            "phaseExplanation": "Summary of OR gate behavior",
+            "title": "OR Truth Table",
+            "description": "The truth table shows all possible input combinations.<br><br>OR outputs <b>1</b> in three out of four cases (shown in green). Only when both inputs are 0 does the output become 0 (shown in red).",
+            "noteTitle": "Key Insight",
+            "note": "OR is like a lenient gate: anyone with permission (1) can grant entry (output 1)."
+          },
+          "animations": [
+            { "type": "pulse", "target": "#or_truth_table" }
+          ]
+        },
+        {
+          "id": "comparison",
+          "ui": {
+            "phase": "SUMMARY",
+            "phaseExplanation": "Comparing AND vs OR gates",
+            "title": "AND vs OR",
+            "description": "Both gates are fundamental building blocks:<br><br><b>AND</b>: Strict. Needs ALL inputs to be 1.<br><b>OR</b>: Lenient. Needs ANY input to be 1.<br><br>By combining these gates, we can build complex logic circuits that power all digital devices.",
+            "noteTitle": "Building Blocks",
+            "note": "Modern CPUs contain billions of these tiny gates working together to perform calculations."
+          },
+          "animations": []
+        }
+      ]
+    }
+  ]
+}

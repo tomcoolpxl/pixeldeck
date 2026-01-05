@@ -22,8 +22,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 │       ├── ui-controller.js    # Sidebar/controls updates
 │       └── topic-loader.js     # Loads topic JSON + SVG
 ├── topics/
-│   └── cpu-architecture/
-│       ├── topic.json          # Topic definition (slides, steps, animations)
+│   ├── cpu-architecture/
+│   │   ├── topic.json          # Topic definition (slides, steps, animations)
+│   │   └── diagram.svg         # SVG diagram
+│   └── logic-gates/
+│       ├── topic.json          # AND/OR gates with transistor switches
 │       └── diagram.svg         # SVG diagram
 ├── assets/img/             # Static assets
 └── cpu.html                # Legacy standalone version (deprecated)
@@ -72,6 +75,9 @@ Topic (e.g., cpu-architecture)
 - `packet`: Animate data packet along paths. `{"type": "packet", "text": "DATA", "from": [x,y], "paths": [...]}`
 - `setValue`: Change text element. `{"type": "setValue", "target": "element_id", "value": "new text"}`
 - `pulse`: Visual highlight effect. `{"type": "pulse", "target": "#node_id"}`
+- `wait`: Pause animation. `{"type": "wait", "duration": 0.5}`
+- `anim`: Generic SVG attribute animation. `{"type": "anim", "target": "#element_id", "to": {"transform": "translate(85,0)", "fill": "#10b981"}, "duration": 1.0}`
+- `parallel`: Run multiple animations simultaneously. `{"type": "parallel", "animations": [...]}`
 
 ## Key Engine Components
 

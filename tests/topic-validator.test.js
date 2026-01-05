@@ -63,7 +63,7 @@ function validateTopic(topic, topicId) {
                     if (!anim.type) {
                         errors.push(`${animPrefix}: Missing required field: type`);
                     } else {
-                        const validTypes = ['camera', 'packet', 'setValue', 'pulse', 'wait'];
+                        const validTypes = ['camera', 'packet', 'setValue', 'pulse', 'wait', 'anim', 'parallel'];
                         if (!validTypes.includes(anim.type)) {
                             errors.push(`${animPrefix}: Invalid animation type: ${anim.type}`);
                         }
