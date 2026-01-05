@@ -40,13 +40,13 @@
             "val_ram": "Addr 0x1A"
           },
           "finalState": {
-            "val_ram": "READING..."
+            "val_ram": "INC ACC"
           },
           "animations": [
             { "type": "camera", "to": [150, 200, 800, 450] },
             {
               "type": "packet",
-              "text": "0x1A",
+              "text": "ADDR 0x1A",
               "from": [700, 300],
               "paths": [
                 "#path_pc_out",
@@ -56,6 +56,8 @@
             },
             { "type": "pulse", "target": "#node_ram" },
             { "type": "setValue", "target": "val_ram", "value": "READING..." },
+            { "type": "wait", "duration": 0.5 },
+            { "type": "setValue", "target": "val_ram", "value": "INC ACC" },
             { "type": "camera", "to": [0, 0, 1600, 900] }
           ]
         },
@@ -69,7 +71,7 @@
             "note": "Fetching data from RAM takes much longer than processing it. Modern CPUs use 'Cache' to speed this up."
           },
           "initialState": {
-            "val_ram": "READING...",
+            "val_ram": "INC ACC",
             "val_ir": "--"
           },
           "finalState": {
@@ -79,7 +81,7 @@
             { "type": "camera", "to": [150, 200, 800, 450] },
             {
               "type": "packet",
-              "text": "INC",
+              "text": "INC ACC",
               "from": [300, 350],
               "paths": [
                 "#path_ram_out",
@@ -111,7 +113,7 @@
             { "type": "camera", "to": [600, 300, 800, 450] },
             {
               "type": "packet",
-              "text": "OP",
+              "text": "INC ACC",
               "from": [850, 450],
               "paths": [
                 { "path": "#path_ir_cu", "duration": 1.5, "ease": "power1.inOut" }
@@ -141,7 +143,7 @@
             { "type": "camera", "to": [700, 300, 800, 450] },
             {
               "type": "packet",
-              "text": "5",
+              "text": "VAL: 5",
               "from": [1300, 550],
               "paths": [
                 { "path": "#path_acc_alu", "duration": 1.5 }
@@ -149,7 +151,7 @@
             },
             {
               "type": "packet",
-              "text": "+1",
+              "text": "OP: +1",
               "from": [850, 650],
               "paths": [
                 { "path": "#path_cu_alu", "duration": 2.0 }
@@ -179,7 +181,7 @@
             { "type": "camera", "to": [900, 300, 600, 337] },
             {
               "type": "packet",
-              "text": "6",
+              "text": "RESULT: 6",
               "from": [1225, 350],
               "paths": [
                 { "path": "#path_alu_acc", "duration": 2.0 }

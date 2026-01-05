@@ -20,9 +20,36 @@
     <!-- RAM -->
     <g id="node_ram" transform="translate(200, 350)">
         <rect class="comp-bg type-blue" width="200" height="400" rx="10" filter="url(#glow-blue)"/>
-        <text class="comp-label text-blue" x="100" y="40">RAM</text>
-        <text id="val_ram" class="comp-val" x="100" y="200">Addr 0x1A</text>
-        <text class="comp-val" x="100" y="230" font-size="16" fill="#aaa">[INC ACC]</text>
+        <text class="comp-label text-blue" x="100" y="35">RAM</text>
+
+        <!-- Memory addresses list -->
+        <text x="30" y="70" font-family="monospace" font-size="13" fill="#64748b">ADDR</text>
+        <text x="110" y="70" font-family="monospace" font-size="13" fill="#64748b">DATA</text>
+
+        <line x1="20" y1="80" x2="180" y2="80" stroke="#334155" stroke-width="1"/>
+
+        <text x="30" y="105" font-family="monospace" font-size="14" fill="#64748b">0x18</text>
+        <text x="110" y="105" font-family="monospace" font-size="14" fill="#64748b">MOV A,B</text>
+
+        <text x="30" y="130" font-family="monospace" font-size="14" fill="#64748b">0x19</text>
+        <text x="110" y="130" font-family="monospace" font-size="14" fill="#64748b">ADD #3</text>
+
+        <!-- Highlighted current address -->
+        <rect id="ram_highlight" x="15" y="140" width="170" height="28" rx="4" fill="#38bdf820" stroke="#38bdf8" stroke-width="1"/>
+        <text x="30" y="160" font-family="monospace" font-size="14" fill="#38bdf8" font-weight="bold">0x1A</text>
+        <text id="val_ram" x="110" y="160" font-family="monospace" font-size="14" fill="#38bdf8" font-weight="bold">INC ACC</text>
+
+        <text x="30" y="190" font-family="monospace" font-size="14" fill="#64748b">0x1B</text>
+        <text x="110" y="190" font-family="monospace" font-size="14" fill="#64748b">STR A</text>
+
+        <text x="30" y="215" font-family="monospace" font-size="14" fill="#64748b">0x1C</text>
+        <text x="110" y="215" font-family="monospace" font-size="14" fill="#64748b">JMP 0x10</text>
+
+        <text x="30" y="240" font-family="monospace" font-size="14" fill="#64748b">0x1D</text>
+        <text x="110" y="240" font-family="monospace" font-size="14" fill="#64748b">NOP</text>
+
+        <line x1="20" y1="255" x2="180" y2="255" stroke="#334155" stroke-width="1"/>
+        <text x="100" y="280" font-family="monospace" font-size="12" fill="#475569" text-anchor="middle">...</text>
     </g>
 
     <!-- CPU Boundary -->
@@ -66,7 +93,7 @@
 
     <!-- Data Packet (animated element) -->
     <g id="packet-grp">
-        <rect class="packet-bg" x="-40" y="-20" width="80" height="40" rx="10" />
-        <text id="packet-text" class="packet-text" x="0" y="0">DATA</text>
+        <rect class="packet-bg" x="-55" y="-18" width="110" height="36" rx="8" />
+        <text id="packet-text" class="packet-text" x="0" y="1">DATA</text>
     </g>
 </svg>
