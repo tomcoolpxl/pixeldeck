@@ -13,6 +13,7 @@ export class UIController {
             stepProgress: document.getElementById('step-progress'),
             slideProgress: document.getElementById('slide-progress'),
             phaseBadge: document.getElementById('phase-badge'),
+            phaseExplanation: document.getElementById('phase-explanation'),
             stepTitle: document.getElementById('step-title'),
             stepDesc: document.getElementById('step-desc'),
             ddTitle: document.getElementById('dd-title'),
@@ -47,10 +48,37 @@ export class UIController {
     updateStepContent(step) {
         if (!step || !step.ui) return;
 
-        const { phase, title, description, noteTitle, note } = step.ui;
+        const { phase, phaseExplanation, title, description, noteTitle, note } = step.ui;
 
         if (this.elements.phaseBadge) {
             this.elements.phaseBadge.textContent = phase || '';
+
+            // Remove all phase classes
+            this.elements.phaseBadge.classList.remove(
+                'phase-fetch', 'phase-decode', 'phase-execute', 'phase-store'
+            );
+
+            // Add phase-specific class based on phase text
+            if (phase) {
+                const phaseLower = phase.toLowerCase();
+                if (phaseLower.includes('fetch')) {
+                    this.elements.phaseBadge.classList.add('phase-fetch');
+                } else if (phaseLower.includes('decode')) {
+                    this.elements.phaseBadge.classList.add('phase-decode');
+                } else if (phaseLower.includes('execute')) {
+                    this.elements.phaseBadge.classList.add('phase-execute');
+                } else if (phaseLower.includes('store')) {
+                    this.elements.phaseBadge.classList.add('phase-store');
+                }
+            }
+        }
+        if (this.elements.phaseExplanation) {
+            if (phaseExplanation) {
+                this.elements.phaseExplanation.innerHTML = phaseExplanation;
+                this.elements.phaseExplanation.style.display = 'block';
+            } else {
+                this.elements.phaseExplanation.style.display = 'none';
+            }
         }
         if (this.elements.stepTitle) {
             this.elements.stepTitle.textContent = title || '';

@@ -31,6 +31,7 @@
           "id": "fetch-address",
           "ui": {
             "phase": "PHASE 1: FETCH",
+            "phaseExplanation": "The CPU retrieves the next instruction from memory. This is like reading the next line in a recipe book.",
             "title": "Address Request",
             "description": "The <span class='hl'>PC (Program Counter)</span> sends the address <code>0x1A</code> to RAM.",
             "noteTitle": "Analogy",
@@ -65,6 +66,7 @@
           "id": "fetch-data",
           "ui": {
             "phase": "PHASE 1: FETCH",
+            "phaseExplanation": "The CPU retrieves the next instruction from memory. This is like reading the next line in a recipe book.",
             "title": "Instruction Return",
             "description": "RAM finds the data at 0x1A: <span class='hl'>INC ACC</span>. It sends it back to the <span class='hl'>IR</span>.",
             "noteTitle": "Why It's Slow",
@@ -98,6 +100,7 @@
           "id": "decode",
           "ui": {
             "phase": "PHASE 2: DECODE",
+            "phaseExplanation": "The CPU interprets the instruction to understand what operation to perform. Like translating a recipe step into actions.",
             "title": "Control Logic",
             "description": "The <span class='hl'>Control Unit</span> reads 'INC ACC' and translates it into the electrical command: <b>ADD 1</b>.",
             "noteTitle": "The Boss",
@@ -128,6 +131,7 @@
           "id": "execute",
           "ui": {
             "phase": "PHASE 3: EXECUTE",
+            "phaseExplanation": "The CPU performs the actual operation - calculations, comparisons, or data movement. This is where the real work happens!",
             "title": "ALU Calculation",
             "description": "The <span class='hl'>ALU</span> receives 5 (from ACC) and +1 (from CU). It calculates the result: 6.",
             "noteTitle": "How It Works",
@@ -166,6 +170,7 @@
           "id": "store",
           "ui": {
             "phase": "PHASE 4: STORE",
+            "phaseExplanation": "The CPU saves the result of the operation back to a register or memory. The final step that preserves the work done.",
             "title": "Write Back",
             "description": "The result <b>6</b> travels from the ALU back to the <span class='hl'>Accumulator</span>.",
             "noteTitle": "State Change",

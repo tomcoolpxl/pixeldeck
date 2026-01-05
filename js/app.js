@@ -80,7 +80,7 @@ class PresentationApp {
 
         this.animator.init(svg);
         this.animator.resetCamera();
-        this.loader.applyInitialValues(slide);
+        this.loader.resetToInitialState(slide);
     }
 
     bindControls() {
@@ -191,8 +191,8 @@ class PresentationApp {
         // Update UI content
         this.ui.updateStepContent(step);
 
-        // Reset to initial slide state
-        this.loader.applyInitialValues(slide);
+        // Reset to initial slide state (uses captured SVG state + slide overrides)
+        this.loader.resetToInitialState(slide);
         this.animator.resetCamera();
 
         // Apply all finalStates up to current step to show cumulative state
@@ -206,7 +206,7 @@ class PresentationApp {
         // If animating, play the current step's animation
         if (animate && step.animations && step.animations.length > 0) {
             // First reset to state BEFORE this step
-            this.loader.applyInitialValues(slide);
+            this.loader.resetToInitialState(slide);
             for (let i = 0; i < stepIndex; i++) {
                 const s = slide.steps[i];
                 if (s.finalState) {

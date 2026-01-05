@@ -5,6 +5,7 @@
 export class TopicLoader {
     constructor(basePath = 'topics') {
         this.basePath = basePath;
+        this.capturedInitialState = null;
     }
 
     /**
@@ -41,13 +42,66 @@ export class TopicLoader {
     }
 
     /**
-     * Inject SVG into the stage
+     * Inject SVG into the stage and capture initial state
      */
     injectDiagram(svgText, stageElement) {
         stageElement.innerHTML = svgText;
 
-        // Return reference to SVG element
-        return stageElement.querySelector('svg');
+        const svg = stageElement.querySelector('svg');
+
+        // Automatically capture initial state of all dynamic text elements
+        // This captures elements with IDs starting with 'val_' or class 'comp-val'
+        this.capturedInitialState = this.captureInitialState(svg);
+
+        return svg;
+    }
+
+    /**
+     * Capture the initial text content of all dynamic elements in the SVG
+     * Looks for elements with IDs starting with 'val_' or with class 'comp-val'
+     */
+    captureInitialState(svg) {
+        const state = {};
+
+        // Capture all elements with IDs starting with 'val_'
+        const valElements = svg.querySelectorAll('[id^="val_"]');
+        valElements.forEach(el => {
+            state[el.id] = el.textContent;
+        });
+
+        // Also capture elements with class 'comp-val' that have IDs
+        const compValElements = svg.querySelectorAll('.comp-val[id]');
+        compValElements.forEach(el => {
+            state[el.id] = el.textContent;
+        });
+
+        return state;
+    }
+
+    /**
+     * Reset all dynamic elements to their initial captured state
+     * Then apply any slide-specific component overrides
+     */
+    resetToInitialState(slide) {
+        // First restore the captured SVG initial state
+        if (this.capturedInitialState) {
+            Object.entries(this.capturedInitialState).forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.textContent = value;
+                }
+            });
+        }
+
+        // Then apply slide-specific component overrides (if any)
+        if (slide && slide.components) {
+            Object.entries(slide.components).forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.textContent = value;
+                }
+            });
+        }
     }
 
     /**

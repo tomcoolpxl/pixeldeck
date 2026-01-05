@@ -134,16 +134,108 @@ body {
     gap: 20px;
 }
 
+/* Phase container for badge + explanation */
+.phase-container {
+    margin-bottom: 10px;
+}
+
 .phase-badge {
-    background: var(--border);
+    background: linear-gradient(135deg, var(--border) 0%, var(--panel-header) 100%);
     color: var(--text-main);
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 12px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 22px;
     display: inline-block;
-    border: 1px solid var(--border-light);
+    border: 2px solid var(--border-light);
     align-self: flex-start;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Phase-specific colors */
+.phase-badge.phase-fetch {
+    background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%);
+    border-color: var(--blue);
+    color: var(--blue);
+    box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+}
+
+.phase-badge.phase-decode {
+    background: linear-gradient(135deg, #422006 0%, #1c0a00 100%);
+    border-color: var(--yellow);
+    color: var(--yellow);
+    box-shadow: 0 4px 20px rgba(250, 204, 21, 0.3);
+}
+
+.phase-badge.phase-execute {
+    background: linear-gradient(135deg, #500724 0%, #2e0515 100%);
+    border-color: var(--pink);
+    color: var(--pink);
+    box-shadow: 0 4px 20px rgba(244, 114, 182, 0.3);
+}
+
+.phase-badge.phase-store {
+    background: linear-gradient(135deg, #052e16 0%, #022c22 100%);
+    border-color: #22c55e;
+    color: #22c55e;
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+}
+
+/* Light theme phase colors */
+[data-theme="light"] .phase-badge.phase-fetch {
+    background: linear-gradient(135deg, #bae6fd 0%, #e0f2fe 100%);
+    color: #0369a1;
+    border-color: #0284c7;
+}
+
+[data-theme="light"] .phase-badge.phase-decode {
+    background: linear-gradient(135deg, #fef08a 0%, #fef9c3 100%);
+    color: #a16207;
+    border-color: #ca8a04;
+}
+
+[data-theme="light"] .phase-badge.phase-execute {
+    background: linear-gradient(135deg, #fbcfe8 0%, #fce7f3 100%);
+    color: #be185d;
+    border-color: #db2777;
+}
+
+[data-theme="light"] .phase-badge.phase-store {
+    background: linear-gradient(135deg, #bbf7d0 0%, #dcfce7 100%);
+    color: #15803d;
+    border-color: #22c55e;
+}
+
+/* Phase explanation text */
+.phase-explanation {
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: var(--deep-dive-bg);
+    border-left: 4px solid var(--border-light);
+    border-radius: 0 8px 8px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.phase-badge.phase-fetch + .phase-explanation {
+    border-left-color: var(--blue);
+}
+
+.phase-badge.phase-decode + .phase-explanation {
+    border-left-color: var(--yellow);
+}
+
+.phase-badge.phase-execute + .phase-explanation {
+    border-left-color: var(--pink);
+}
+
+.phase-badge.phase-store + .phase-explanation {
+    border-left-color: #22c55e;
 }
 
 #step-title {
