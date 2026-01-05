@@ -177,21 +177,32 @@ export class UIController {
      */
     updatePhaseIndicator(activePhase) {
         const phases = ['fetch', 'decode', 'execute', 'store'];
+        const isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
 
-        // Active colors (bright)
-        const activeColors = {
+        // Active colors (bright) - different for light/dark theme
+        const activeColors = isLightTheme ? {
+            fetch: { bg: '#e0f2fe', border: '#0284c7', text: '#0369a1' },
+            decode: { bg: '#fef9c3', border: '#ca8a04', text: '#a16207' },
+            execute: { bg: '#fce7f3', border: '#db2777', text: '#be185d' },
+            store: { bg: '#dcfce7', border: '#22c55e', text: '#15803d' }
+        } : {
             fetch: { bg: '#0c4a6e', border: '#38bdf8', text: '#38bdf8' },
             decode: { bg: '#422006', border: '#facc15', text: '#facc15' },
             execute: { bg: '#500724', border: '#f472b6', text: '#f472b6' },
             store: { bg: '#052e16', border: '#22c55e', text: '#22c55e' }
         };
 
-        // Inactive colors (faded versions of the phase colors)
-        const inactiveColors = {
-            fetch: { text: '#1e5a7e' },    // faded blue
-            decode: { text: '#6b5a1f' },   // faded yellow
-            execute: { text: '#6b3a4a' },  // faded pink
-            store: { text: '#2a5a3a' }     // faded green
+        // Inactive colors (faded versions) - different for light/dark theme
+        const inactiveColors = isLightTheme ? {
+            fetch: { text: '#7dd3fc' },    // faded blue (light)
+            decode: { text: '#fcd34d' },   // faded yellow (light)
+            execute: { text: '#f9a8d4' },  // faded pink (light)
+            store: { text: '#86efac' }     // faded green (light)
+        } : {
+            fetch: { text: '#1e5a7e' },    // faded blue (dark)
+            decode: { text: '#6b5a1f' },   // faded yellow (dark)
+            execute: { text: '#6b3a4a' },  // faded pink (dark)
+            store: { text: '#2a5a3a' }     // faded green (dark)
         };
 
         phases.forEach(phase => {

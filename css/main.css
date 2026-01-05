@@ -471,6 +471,31 @@ button:disabled {
     fill: var(--green);
 }
 
+/* Phase Indicator Box (SVG) */
+.phase-box-bg {
+    fill: var(--panel);
+    stroke: var(--border);
+}
+
+.phase-box-title {
+    fill: var(--text-muted);
+}
+
+.phase-box-divider {
+    stroke: var(--border);
+}
+
+/* Initial inactive phase text colors (before JS updates them) */
+#phase-text-fetch { fill: #1e5a7e; }
+#phase-text-decode { fill: #6b5a1f; }
+#phase-text-execute { fill: #6b3a4a; }
+#phase-text-store { fill: #2a5a3a; }
+
+[data-theme="light"] #phase-text-fetch { fill: #7dd3fc; }
+[data-theme="light"] #phase-text-decode { fill: #fcd34d; }
+[data-theme="light"] #phase-text-execute { fill: #f9a8d4; }
+[data-theme="light"] #phase-text-store { fill: #86efac; }
+
 #packet-grp {
     opacity: 0;
     pointer-events: none;
