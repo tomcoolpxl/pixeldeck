@@ -3,11 +3,43 @@
         <filter id="glow-blue"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         <filter id="glow-pink"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         <filter id="glow-yellow"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="glow-green"><feGaussianBlur stdDeviation="4" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     </defs>
+
+    <!-- Phase Indicator Box -->
+    <g id="phase-indicator" transform="translate(20, 0)">
+        <rect class="phase-box-bg" x="0" y="0" width="160" height="220" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="2"/>
+        <text x="80" y="30" font-family="sans-serif" font-size="14" font-weight="bold" fill="#64748b" text-anchor="middle">CYCLE PHASES</text>
+        <line x1="15" y1="45" x2="145" y2="45" stroke="#1e293b" stroke-width="1"/>
+
+        <!-- Phase 1: FETCH -->
+        <g id="phase-ind-fetch" class="phase-item">
+            <rect id="phase-bg-fetch" x="10" y="55" width="140" height="35" rx="6" fill="transparent" stroke="transparent" stroke-width="2"/>
+            <text id="phase-text-fetch" x="80" y="78" font-family="sans-serif" font-size="14" font-weight="bold" fill="#64748b" text-anchor="middle">1. FETCH</text>
+        </g>
+
+        <!-- Phase 2: DECODE -->
+        <g id="phase-ind-decode" class="phase-item">
+            <rect id="phase-bg-decode" x="10" y="95" width="140" height="35" rx="6" fill="transparent" stroke="transparent" stroke-width="2"/>
+            <text id="phase-text-decode" x="80" y="118" font-family="sans-serif" font-size="14" font-weight="bold" fill="#64748b" text-anchor="middle">2. DECODE</text>
+        </g>
+
+        <!-- Phase 3: EXECUTE -->
+        <g id="phase-ind-execute" class="phase-item">
+            <rect id="phase-bg-execute" x="10" y="135" width="140" height="35" rx="6" fill="transparent" stroke="transparent" stroke-width="2"/>
+            <text id="phase-text-execute" x="80" y="158" font-family="sans-serif" font-size="14" font-weight="bold" fill="#64748b" text-anchor="middle">3. EXECUTE</text>
+        </g>
+
+        <!-- Phase 4: STORE -->
+        <g id="phase-ind-store" class="phase-item">
+            <rect id="phase-bg-store" x="10" y="175" width="140" height="35" rx="6" fill="transparent" stroke="transparent" stroke-width="2"/>
+            <text id="phase-text-store" x="80" y="198" font-family="sans-serif" font-size="14" font-weight="bold" fill="#64748b" text-anchor="middle">4. STORE</text>
+        </g>
+    </g>
 
     <!-- Wires / Bus -->
     <path id="wire_bus_main" class="wire" d="M 100 250 L 950 250" />
-    <text x="120" y="240" fill="#22c55e" font-size="14" font-weight="bold" font-family="sans-serif">DATA BUS</text>
+    <text x="200" y="240" fill="#22c55e" font-size="14" font-weight="bold" font-family="sans-serif">DATA BUS</text>
     <path id="path_ram_out" class="wire" d="M 300 350 L 300 250" />
     <path id="path_ram_in" class="wire" d="M 300 250 L 300 350" />
     <path id="path_pc_out" class="wire" d="M 700 350 L 700 250" />

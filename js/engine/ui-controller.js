@@ -50,6 +50,21 @@ export class UIController {
 
         const { phase, phaseExplanation, title, description, noteTitle, note } = step.ui;
 
+        // Determine which phase is active
+        let activePhase = null;
+        if (phase) {
+            const phaseLower = phase.toLowerCase();
+            if (phaseLower.includes('fetch')) {
+                activePhase = 'fetch';
+            } else if (phaseLower.includes('decode')) {
+                activePhase = 'decode';
+            } else if (phaseLower.includes('execute')) {
+                activePhase = 'execute';
+            } else if (phaseLower.includes('store')) {
+                activePhase = 'store';
+            }
+        }
+
         if (this.elements.phaseBadge) {
             this.elements.phaseBadge.textContent = phase || '';
 
@@ -58,20 +73,14 @@ export class UIController {
                 'phase-fetch', 'phase-decode', 'phase-execute', 'phase-store'
             );
 
-            // Add phase-specific class based on phase text
-            if (phase) {
-                const phaseLower = phase.toLowerCase();
-                if (phaseLower.includes('fetch')) {
-                    this.elements.phaseBadge.classList.add('phase-fetch');
-                } else if (phaseLower.includes('decode')) {
-                    this.elements.phaseBadge.classList.add('phase-decode');
-                } else if (phaseLower.includes('execute')) {
-                    this.elements.phaseBadge.classList.add('phase-execute');
-                } else if (phaseLower.includes('store')) {
-                    this.elements.phaseBadge.classList.add('phase-store');
-                }
+            // Add phase-specific class
+            if (activePhase) {
+                this.elements.phaseBadge.classList.add(`phase-${activePhase}`);
             }
         }
+
+        // Update SVG phase indicator
+        this.updatePhaseIndicator(activePhase);
         if (this.elements.phaseExplanation) {
             if (phaseExplanation) {
                 this.elements.phaseExplanation.innerHTML = phaseExplanation;
@@ -159,6 +168,39 @@ export class UIController {
                     e.preventDefault();
                     handlers.restart();
                     break;
+            }
+        });
+    }
+
+    /**
+     * Update the SVG phase indicator to highlight the active phase
+     */
+    updatePhaseIndicator(activePhase) {
+        const phases = ['fetch', 'decode', 'execute', 'store'];
+        const colors = {
+            fetch: { bg: '#0c4a6e', border: '#38bdf8', text: '#38bdf8' },
+            decode: { bg: '#422006', border: '#facc15', text: '#facc15' },
+            execute: { bg: '#500724', border: '#f472b6', text: '#f472b6' },
+            store: { bg: '#052e16', border: '#22c55e', text: '#22c55e' }
+        };
+        const inactiveColor = '#64748b';
+
+        phases.forEach(phase => {
+            const bg = document.getElementById(`phase-bg-${phase}`);
+            const text = document.getElementById(`phase-text-${phase}`);
+
+            if (bg && text) {
+                if (phase === activePhase) {
+                    // Highlight active phase
+                    bg.setAttribute('fill', colors[phase].bg);
+                    bg.setAttribute('stroke', colors[phase].border);
+                    text.setAttribute('fill', colors[phase].text);
+                } else {
+                    // Reset inactive phases
+                    bg.setAttribute('fill', 'transparent');
+                    bg.setAttribute('stroke', 'transparent');
+                    text.setAttribute('fill', inactiveColor);
+                }
             }
         });
     }
