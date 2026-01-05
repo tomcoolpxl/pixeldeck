@@ -25,7 +25,9 @@
             "noteTitle": "Components Overview",
             "note": "<strong>RAM</strong> = Memory that stores instructions and data<br><strong>PC</strong> = Program Counter (tracks current instruction)<br><strong>IR</strong> = Instruction Register (holds current instruction)<br><strong>CU</strong> = Control Unit (directs operations)<br><strong>ALU</strong> = Arithmetic Logic Unit (does math)<br><strong>ACC</strong> = Accumulator (stores results)"
           },
-          "animations": []
+          "animations": [
+            { "type": "pulse", "target": "#phase-indicator" }
+          ]
         },
         {
           "id": "fetch-address",

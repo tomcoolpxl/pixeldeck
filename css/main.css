@@ -341,8 +341,16 @@ button:disabled {
     flex-grow: 2;
 }
 
+[data-theme="light"] #nextBtn {
+    color: #ffffff;
+}
+
 #nextBtn:hover:not(:disabled) {
     background: #7dd3fc;
+}
+
+[data-theme="light"] #nextBtn:hover:not(:disabled) {
+    background: #0369a1;
 }
 
 #nextBtn:active:not(:disabled) {
@@ -486,15 +494,15 @@ button:disabled {
 }
 
 /* Initial inactive phase text colors (before JS updates them) */
-#phase-text-fetch { fill: #1e5a7e; }
-#phase-text-decode { fill: #6b5a1f; }
-#phase-text-execute { fill: #6b3a4a; }
-#phase-text-store { fill: #2a5a3a; }
+#phase-text-fetch { fill: #38bdf8; opacity: 0.5; }
+#phase-text-decode { fill: #facc15; opacity: 0.5; }
+#phase-text-execute { fill: #f472b6; opacity: 0.5; }
+#phase-text-store { fill: #4ade80; opacity: 0.5; }
 
-[data-theme="light"] #phase-text-fetch { fill: #7dd3fc; }
-[data-theme="light"] #phase-text-decode { fill: #fcd34d; }
-[data-theme="light"] #phase-text-execute { fill: #f9a8d4; }
-[data-theme="light"] #phase-text-store { fill: #86efac; }
+[data-theme="light"] #phase-text-fetch { fill: #0ea5e9; opacity: 0.5; }
+[data-theme="light"] #phase-text-decode { fill: #eab308; opacity: 0.5; }
+[data-theme="light"] #phase-text-execute { fill: #ec4899; opacity: 0.5; }
+[data-theme="light"] #phase-text-store { fill: #22c55e; opacity: 0.5; }
 
 #packet-grp {
     opacity: 0;

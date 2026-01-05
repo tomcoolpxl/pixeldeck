@@ -192,17 +192,17 @@ export class UIController {
             store: { bg: '#052e16', border: '#22c55e', text: '#22c55e' }
         };
 
-        // Inactive colors (faded versions) - different for light/dark theme
+        // Inactive colors (faded but readable) - different for light/dark theme
         const inactiveColors = isLightTheme ? {
-            fetch: { text: '#7dd3fc' },    // faded blue (light)
-            decode: { text: '#fcd34d' },   // faded yellow (light)
-            execute: { text: '#f9a8d4' },  // faded pink (light)
-            store: { text: '#86efac' }     // faded green (light)
+            fetch: { text: '#0ea5e9' },    // medium blue (light)
+            decode: { text: '#eab308' },   // medium yellow (light)
+            execute: { text: '#ec4899' },  // medium pink (light)
+            store: { text: '#22c55e' }     // medium green (light)
         } : {
-            fetch: { text: '#1e5a7e' },    // faded blue (dark)
-            decode: { text: '#6b5a1f' },   // faded yellow (dark)
-            execute: { text: '#6b3a4a' },  // faded pink (dark)
-            store: { text: '#2a5a3a' }     // faded green (dark)
+            fetch: { text: '#38bdf8' },    // brighter blue (dark)
+            decode: { text: '#facc15' },   // brighter yellow (dark)
+            execute: { text: '#f472b6' },  // brighter pink (dark)
+            store: { text: '#4ade80' }     // brighter green (dark)
         };
 
         phases.forEach(phase => {
@@ -211,15 +211,15 @@ export class UIController {
 
             if (bg && text) {
                 if (phase === activePhase) {
-                    // Highlight active phase with full colors
-                    bg.setAttribute('fill', activeColors[phase].bg);
-                    bg.setAttribute('stroke', activeColors[phase].border);
-                    text.setAttribute('fill', activeColors[phase].text);
+                    // Highlight active phase with full colors (use style to override CSS)
+                    bg.style.fill = activeColors[phase].bg;
+                    bg.style.stroke = activeColors[phase].border;
+                    text.style.fill = activeColors[phase].text;
                 } else {
                     // Faded phase-appropriate colors for inactive phases
-                    bg.setAttribute('fill', 'transparent');
-                    bg.setAttribute('stroke', 'transparent');
-                    text.setAttribute('fill', inactiveColors[phase].text);
+                    bg.style.fill = 'transparent';
+                    bg.style.stroke = 'transparent';
+                    text.style.fill = inactiveColors[phase].text;
                 }
             }
         });

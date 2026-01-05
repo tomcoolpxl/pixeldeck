@@ -34,7 +34,7 @@ class PresentationApp {
             this.ui.setTopicTitle(this.topicData.title);
 
             await this.loadSlide(0);
-            this.showCurrentStep(false); // Don't animate on initial load
+            this.showCurrentStep(true); // Animate on initial load
 
             this.bindControls();
 
