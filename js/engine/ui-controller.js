@@ -215,11 +215,13 @@ export class UIController {
                     bg.style.fill = activeColors[phase].bg;
                     bg.style.stroke = activeColors[phase].border;
                     text.style.fill = activeColors[phase].text;
+                    text.style.opacity = '1';
                 } else {
                     // Faded phase-appropriate colors for inactive phases
                     bg.style.fill = 'transparent';
                     bg.style.stroke = 'transparent';
                     text.style.fill = inactiveColors[phase].text;
+                    text.style.opacity = '0.5';
                 }
             }
         });
