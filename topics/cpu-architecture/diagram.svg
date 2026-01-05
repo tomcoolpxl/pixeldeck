@@ -95,9 +95,9 @@
 
     <!-- Instruction Register -->
     <g id="node_ir" transform="translate(800, 350)">
-        <rect class="comp-bg type-blue" width="100" height="100" rx="8" filter="url(#glow-blue)"/>
-        <text class="comp-label text-blue" x="50" y="30">IR</text>
-        <text id="val_ir" class="comp-val" x="50" y="70">--</text>
+        <rect class="comp-bg type-blue" width="130" height="100" rx="8" filter="url(#glow-blue)"/>
+        <text class="comp-label text-blue" x="65" y="30">IR</text>
+        <text id="val_ir" class="comp-val" x="65" y="70">--</text>
     </g>
 
     <!-- Control Unit -->
