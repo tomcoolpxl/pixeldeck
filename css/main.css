@@ -20,6 +20,8 @@
     --comp-blue-fill: #0c1220;
     --comp-yellow-fill: #1a1500;
     --comp-pink-fill: #1a0510;
+    --green: #22c55e;
+    --comp-green-fill: #022c22;
 }
 
 /* Light theme */
@@ -42,6 +44,8 @@
     --comp-blue-fill: #e0f2fe;
     --comp-yellow-fill: #fef9c3;
     --comp-pink-fill: #fce7f3;
+    --green: #16a34a;
+    --comp-green-fill: #dcfce7;
 }
 
 * {
@@ -459,12 +463,12 @@ button:disabled {
 }
 
 .type-green {
-    stroke: #22c55e;
-    fill: #022c22;
+    stroke: var(--green);
+    fill: var(--comp-green-fill);
 }
 
 .text-green {
-    fill: #22c55e;
+    fill: var(--green);
 }
 
 #packet-grp {
