@@ -118,8 +118,8 @@
 
     <!-- Accumulator -->
     <g id="node_acc" transform="translate(1250, 550)">
-        <rect class="comp-bg type-blue" width="150" height="100" rx="8" filter="url(#glow-blue)"/>
-        <text class="comp-label text-blue" x="75" y="30">ACC</text>
+        <rect class="comp-bg type-green" width="150" height="100" rx="8" filter="url(#glow-green)"/>
+        <text class="comp-label text-green" x="75" y="30">ACC</text>
         <text id="val_acc" class="comp-val" x="75" y="70">05</text>
     </g>
 
